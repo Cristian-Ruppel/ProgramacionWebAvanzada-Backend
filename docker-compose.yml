@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./config/django_image/Dockerfile
+    
+    image: videobackend:0.1
+    
+    container_name: django_backend_container
+    
+    working_dir: /usr/src/app
+    
+    volumes:
+      - ./src/django:/usr/src/app
+      
+    ports:
+      - "8000:8000"
+      
+    networks:
+      - django-net
+
+networks:
+  django-net:
+    driver: bridge
