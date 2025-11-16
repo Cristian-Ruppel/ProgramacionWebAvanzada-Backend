@@ -1,0 +1,6 @@
+<h2>Lista de alumnos</h2>
+<ul>
+  {% for alumno in alumnos %}
+    <li>{{ alumno.nombre }} {{ alumno.apellido }} - Edad: {{ alumno.edad }}</li>
+  {% endfor %}
+</ul>
