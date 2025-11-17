@@ -2,7 +2,7 @@
 
 # Le damos 5 segundos a Postgres para que termine de arrancar
 echo "--- Esperando a que Postgres se levante (5 segundos)... ---"
-sleep 5
+sleep 8
 
 # 1. Si no existe manage.py, crea el proyecto
 if [ ! -f manage.py ]; then

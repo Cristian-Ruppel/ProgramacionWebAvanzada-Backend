@@ -11,4 +11,5 @@ urlpatterns = [
     path('alumnos/', views.mostrar_alumnos, name='mostrar_alumnos'),
     path('crear_musico/<str:nombre>/<str:apellido>/<str:instrumento>/', views.crear_musico, name='crear_musico'),
     path('crear_album/<str:nombre>/<int:estrellas>/<int:artista_id>/', views.crear_album, name='crear_album'),
+    path('api_first/', views.api_first, name='api_first'),
 ]

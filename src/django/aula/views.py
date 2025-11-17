@@ -1,9 +1,11 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse 
 from datetime import date
 from django.template import Template, Context 
 from django.template.loader import get_template
 from django.shortcuts import render 
 from .models import Alumno, Musico, Album 
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 def hello(request):
@@ -78,3 +80,27 @@ def crear_album(request, nombre, estrellas, artista_id):
         return HttpResponse(f"Se creó el álbum {album.nombre} del artista {artista.last_name} con id {album.id}")
     except Musico.DoesNotExist:
         return HttpResponse(f"Error: No se encontró un músico con el ID {artista_id}")
+
+
+@csrf_exempt # Decorador para permitir POST sin token (solo para pruebas)
+def api_first(request):
+    if request.method == "GET":
+        # Si es GET, devolvemos el JSON fijo
+        respuesta = {"nombre": "Cristian", "apellido": "Ruppel", "edad": 35}
+        return JsonResponse(respuesta)
+    
+    elif request.method == "POST":
+        # Si es POST, leemos el JSON que nos envían en el "body"
+        data = json.loads(request.body)
+        
+        # Creamos una respuesta "eco" con los datos recibidos
+        resp = {
+            "mensaje": "Datos recibidos con éxito",
+            "nombre_recibido": data.get("nombre"),
+            "apellido_recibido": data.get("apellido"),
+            "edad_recibida": data.get("edad"),
+        }
+        return JsonResponse(resp)
+    
+    else:
+        return JsonResponse({"error": "Método no soportado"}, status=405)
